@@ -4,23 +4,23 @@ from user_data import *
 DEBUG = True
 
 # Create players
-TSOHN.playing = True
-dotoeri.playing = True
-DK_Showmaker.playing = True
-zxczxc.playing = True
-Zinoo.playing = True
-Eightine.playing = False
-JustLikeHim.playing = True
-VexOnTheBeach.playing = True
-muteallgoodgame.playing = False
-LukeyParkey.playing = True
-jenyu62.playing = True
-KoreanSante.playing = True
-wonton.playing = False
+TSOHN.playing           = False
+dotoeri.playing         = True
+DK_Showmaker.playing    = True
+zxczxc.playing          = True
+Zinoo.playing           = True
+Eightine.playing        = True
+JustLikeHim.playing     = True
+VexOnTheBeach.playing   = False
+muteallgoodgame.playing = True
+LukeyParkey.playing     = True
+jenyu62.playing         = False
+KoreanSante.playing     = True
+wonton.playing          = True
 
 players = [p for p in user_pool if p.playing]
 num_players = len(players)
-print("User Pool:", players, end="\n\n")
+# print("User Pool:", players, end="\n\n")
 print("Number of players: ", num_players)
 print("Not Playing:", [p.name for p in user_pool if p.playing == False])
 
