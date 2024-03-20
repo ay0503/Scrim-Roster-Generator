@@ -7,7 +7,8 @@ FIXES = {
     'DK_Showmaker': 'Mid',
     'LukeyParkey': 'Top',
     'dotoeri': 'Jungle',
-    'Eightine': 'ADC',
+    # 'Eightine': 'ADC',
+    'wonton': 'Support'
 }
 
 # generate possible position configs
@@ -58,7 +59,7 @@ def create_balanced_teams(players):
     team_combinations = list(combinations(all_players, 5))
     best_balance = float('inf')
     best_teams = None
-
+    alternatives = []
     for team_a_combo in team_combinations:
         team_b_combo = set(all_players) - set(team_a_combo)
         team_a_permutations = generate_position_permutations(
@@ -89,13 +90,15 @@ def create_balanced_teams(players):
             balance_score = calculate_balance_score(team_a_score, team_b_score)
             if balance_score < best_balance:
                 best_balance = balance_score
+                if best_teams != None:
+                    alternatives.append(best_teams)
                 best_teams = (team_a_score, team_b_score)
-    return best_teams
+    return best_teams, alternatives[-4:]
 
 
 def __main__():
     players = [p for p in USER_POOL if p.playing]
-    # print('Players:', players)
+    print('Players:', list(map(lambda x: x.name,players)))
     num_players = len(players)
     # print("User Pool:", players, end="\n\n")
     print('_________________5v5 Scrim Roster_________________')
@@ -108,7 +111,7 @@ def __main__():
         print('Too many players to create a game')
 
     # find the most balanced teams
-    most_balanced_teams = create_balanced_teams(players)
+    most_balanced_teams, alternatives = create_balanced_teams(players)
     if not most_balanced_teams:
         print('No balanced teams could be found.')
         return
@@ -127,5 +130,17 @@ def __main__():
         end='\n\n',
     )
 
+    print('Alternatives:')
+    for (team_a_score, team_b_score) in alternatives:
+        print(
+            f'Team A [Laning: {team_a_score.laning_phase} Champion Pool: {team_a_score.flex} Overall: {team_a_score.overall}]',
+            team_a_score,
+            end='\n\n',
+        )
+        print(
+            f'Team B [Laning: {team_b_score.laning_phase} Champion Pool: {team_b_score.flex} Overall: {team_b_score.overall}]',
+            team_b_score,
+            end='\n\n',
+        )
 
 __main__()

@@ -46,12 +46,12 @@ class Team:
         }
 
     def __repr__(self) -> str:
-        return f"""\n
-              Top:     {self.players.get('Top', None)}\n
-              Jungle:  {self.players.get('Jungle', None)}\n
-              Mid:     {self.players.get('Mid', None)}\n
-              ADC:     {self.players.get('ADC', None)}\n
-              Support: {self.players.get("Support", None)}"""
+        return f"""
+    Top:     {self.players['Top']}
+    Jungle:  {self.players['Jungle']}
+    Mid:     {self.players['Mid']}
+    ADC:     {self.players['ADC']}
+    Support: {self.players['Support']}"""
 
     def is_valid(self) -> bool:
         for position in self.players:

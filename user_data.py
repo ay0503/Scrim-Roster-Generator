@@ -64,14 +64,14 @@ user_pool = create_players(skills, champ_pools)
 user_pool['TSOHN'].playing = False
 user_pool['dotoeri'].playing = True
 user_pool['DK_Showmaker'].playing = True
-user_pool['zxczxc'].playing = False
+user_pool['zxczxc'].playing = True
 user_pool['Zinoo'].playing = False
 user_pool['Eightine'].playing = True
 user_pool['JustLikeHim'].playing = True
 user_pool['VexOnTheBeach'].playing = True
 user_pool['muteallgoodgame'].playing = True
 user_pool['LukeyParkey'].playing = True
-user_pool['jenyu62'].playing = True
+user_pool['jenyu62'].playing = False
 user_pool['KoreanSante'].playing = True
 user_pool['wonton'].playing = True
 

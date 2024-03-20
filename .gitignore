@@ -1,3 +1,4 @@
 __pycache__
 .DS_Store
 player_data/player_skills_by_position.txt
+player_data/encrypt_skill_data.py
