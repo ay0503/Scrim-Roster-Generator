@@ -1,1 +1,3 @@
 __pycache__
+.DS_Store
+player_data/player_skills_by_position.txt

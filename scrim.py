@@ -3,10 +3,12 @@ from user_data import *
 
 DEBUG = False
 USER_POOL = list(user_pool.values())
-FIXES = {'DK_Showmaker': 'Mid',
-         'LukeyParkey': 'Top',
-         'dotoeri': 'Jungle',
-         'Eightine': 'ADC',}
+FIXES = {
+    'DK_Showmaker': 'Mid',
+    'LukeyParkey': 'Top',
+    'dotoeri': 'Jungle',
+    'Eightine': 'ADC',
+}
 
 # generate possible position configs
 def generate_position_permutations(team, players):
@@ -124,5 +126,6 @@ def __main__():
         team_b_score,
         end='\n\n',
     )
+
 
 __main__()
