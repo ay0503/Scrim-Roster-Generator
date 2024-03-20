@@ -1,0 +1,33 @@
+Top Players
+TSOHN, L: 3, O: 5
+DK_Showmaker, L: 6, O: 7
+LukeyParkey, L: 8, O: 8
+KoreanSante, L: 10, O: 9.5
+wonton, L: 5, O: 6
+
+Jungle Players
+dotoeri, O: 9.5
+JustLikeHim, O: 9.5
+wonton, O: 6
+DK_Showmaker, O: 7
+
+Mid Players
+DK_Showmaker, L: 7.5, O: 8.5
+zxczxc, L: 10, O: 10
+VexOnTheBeach, L: 4, O: 6
+wonton, L: 4, O: 5
+
+ADC Players
+dotoeri, L: 5, O: 5
+zxczxc, L: 7, O: 7
+Zinoo, L: 7, O: 7
+Eightine, L: 6, O: 6
+muteallgoodgame, L: 10, O: 10
+LukeyParkey, L: 4, O: 4
+
+Support Players
+zxczxc, L: 10, O: 9
+Eightine, L: 7, O: 6
+LukeyParkey, L: 6.5, O: 6.5
+jenyu62, L: 2, O: 3
+wonton, L: 7, O: 7

@@ -1,296 +1,78 @@
 # TODO Late game potential
 # TODO (jg, top), (adc, sup) synergy
 
-
-class Player:
-
-    def __init__(self, name) -> None:
-        self.name = name
-        self.positions = []
-        self.playing = True
-
-    def add_position(self, position):
-        self.positions.append(position)
-
-    def __hash__(self) -> int:
-        return hash(self.name)
-
-    def __repr__(self) -> str:
-        return f"\n\n{self.name}: Positions{self.positions}"
-
-    def __eq__(self, other) -> bool:
-        return self.name == other.name
+import re
+from team import *
 
 
-class Position:
-
-    def __init__(self, lane, overall, champ_pool, laning_phase=None) -> None:
-        self.lane = lane
-        self.champ_pool = champ_pool
-
-        # Skill level
-        self.laning_phase = laning_phase
-        self.overall = overall
-
-    def __repr__(self) -> str:
-        return f"\n{self.lane}: Overall[{self.overall}] Laning[{self.laning_phase}]"
-
-
-class Team:
-
-    def __init__(self) -> None:
-        self.laning_phase = 0
-        self.overall = 0
-        self.positions_filled = set()
-        self.players = {
-            "Top": None,
-            "Jungle": None,
-            "Mid": None,
-            "ADC": None,
-            "Support": None,
-        }
-
-    def __repr__(self) -> str:
-        return f"""\n
-              Top:     {self.players.get('Top', None)}\n
-              Jungle:  {self.players.get('Jungle', None)}\n
-              Mid:     {self.players.get('Mid', None)}\n
-              ADC:     {self.players.get('ADC', None)}\n
-              Support: {self.players.get("Support", None)}"""
-
-    def is_valid(self):
-        for position in self.players:
-            if self.players[position] == None:
-                return False
-        return True
+def parse_skills(skills_text):
+    players_skills = []
+    current_position = None
+    for line in skills_text.splitlines():
+        if line.strip() and 'Players' in line:
+            # This is a position heading
+            current_position = line.split(' ')[
+                0
+            ]  # Assuming format "Position Players"
+        elif current_position and ',' in line:
+            # This is a player line under a position
+            name, rest = line.split(',', 1)
+            laning_phase = re.search(r'L: ([\d.]+)', rest)
+            overall = re.search(r'O: ([\d.]+)', rest)
+            players_skills.append(
+                (
+                    name.strip(),
+                    current_position,
+                    float(laning_phase.group(1)) if laning_phase else None,
+                    float(overall.group(1)) if overall else None,
+                )
+            )
+    return players_skills
 
 
-# Create player objects
-user_pool = []
-TSOHN = Player("TSOHN")
-TSOHN.add_position(
-    Position(
-        "Top", laning_phase=6, overall=7, champ_pool=["Aatrox", "Jax", "Mordekaiser"]
-    )
-)
+def parse_champ_pools(champ_pools_text):
+    pattern = re.compile(r'(\w+) Champ Pool: ([\w, ]+)')
+    return {
+        match.group(1): match.group(2).split(', ')
+        for match in pattern.finditer(champ_pools_text)
+    }
 
-dotoeri = Player("dotoeri")
-dotoeri.add_position(
-    Position(
-        "Jungle",
-        overall=9.5,
-        champ_pool=["Graves", "Lee-sin", "Taliyah", "Ekko", "Diana", "Lillia"],
-    )
-)
-dotoeri.add_position(
-    Position(
-        "ADC",
-        overall=5,
-        laning_phase=7,
-        champ_pool=["Ezreal", "Kaisa", "Samira", "Jhin", "Aphelios", "Sivir", "Vayne"],
-    )
-)
 
-DK_Showmaker = Player("DK_Showmaker")
-DK_Showmaker.add_position(
-    Position(
-        "Mid",
-        laning_phase=8.5,
-        overall=9,
-        champ_pool=["Ahri", "Syndra", "Sylas", "Kassadin", "Yasuo", "Akali"],
-    )
-)
-DK_Showmaker.add_position(
-    Position(
-        "Top",
-        laning_phase=7,
-        overall=7,
-        champ_pool=["Aatrox", "Renekton", "Jayce", "Camille", "Gragas"],
-    )
-)
+def create_players(skills, champ_pools):
+    players = {}
+    for name, position, laning, overall in skills:
+        if name not in players:
+            players[name] = Player(name)
+        champ_pool = champ_pools.get(name, [])
+        players[name].add_position(
+            Position(position, overall, champ_pool, laning)
+        )
+    return players
 
-zxczxc = Player("zxczxc")
-zxczxc.add_position(
-    Position(
-        "ADC",
-        laning_phase=7,
-        overall=7,
-        champ_pool=["Senna", "Ezreal", "Vayne", "Xayah", "Lucian"],
-    )
-)
-zxczxc.add_position(
-    Position(
-        "Mid",
-        laning_phase=10,
-        overall=9,
-        champ_pool=[
-            "Ahri",
-            "Akali",
-            "Hwei",
-            "Cassiopeia",
-            "Vladmir",
-            "Orianna",
-            "Lee-sin",
-        ],
-    )
-)
-zxczxc.add_position(
-    Position(
-        "Support",
-        overall=8.5,
-        laning_phase=10,
-        champ_pool=["Senna", "Thresh", "Shaco", "Hwei"],
-    )
-)
 
-Zinoo = Player("Zinoo")
-Zinoo.add_position(
-    Position(
-        "ADC",
-        laning_phase=9,
-        overall=8.5,
-        champ_pool=[
-            "Jinx",
-            "Zeri",
-            "Vayne",
-            "Varus",
-            "Kaisa",
-            "Xayah",
-            "Caitlyn",
-            "Samira",
-            "Kalista",
-        ],
-    )
-)
+skills_path = 'player_data/player_skills_by_position.txt'
+champ_pool_path = 'player_data/player_champion_pools.txt'
 
-Eightine = Player("Eightine")
-Eightine.add_position(
-    Position(
-        "Support",
-        overall=8,
-        laning_phase=8.5,
-        champ_pool=[
-            "Thresh",
-            "Blitzcrank",
-            "Rakan",
-            "Leona",
-            "Nautilus",
-            "Alistar",
-            "Morgana",
-        ],
-    )
-)
-Eightine.add_position(
-    Position(
-        "ADC",
-        laning_phase=7,
-        overall=7.5,
-        champ_pool=["Nilah", "Aphelios", "Ezreal", "Kaisa", "Caitlyn", "Jinx"],
-    )
-)
+skills_text = open(skills_path).read().strip()
+champ_pools_text = open(champ_pool_path).read().strip()
 
-JustLikeHim = Player("JustLikeHim")
-JustLikeHim.add_position(
-    Position("Jungle", overall=9.5, champ_pool=["Khazix", "Vi", "Xin-Zhao"])
-)
+skills = parse_skills(skills_text)
+champ_pools = parse_champ_pools(champ_pools_text)
+user_pool = create_players(skills, champ_pools)
 
-VexOnTheBeach = Player("VexOnTheBeach")
-VexOnTheBeach.add_position(
-    Position(
-        "Mid",
-        laning_phase=7,
-        overall=7.5,
-        champ_pool=["Vex", "Lissandra", "Swain", "Ahri", "Neeko"],
-    )
-)
+# set participating players
+user_pool['TSOHN'].playing = False
+user_pool['dotoeri'].playing = True
+user_pool['DK_Showmaker'].playing = True
+user_pool['zxczxc'].playing = False
+user_pool['Zinoo'].playing = False
+user_pool['Eightine'].playing = True
+user_pool['JustLikeHim'].playing = True
+user_pool['VexOnTheBeach'].playing = True
+user_pool['muteallgoodgame'].playing = True
+user_pool['LukeyParkey'].playing = True
+user_pool['jenyu62'].playing = True
+user_pool['KoreanSante'].playing = True
+user_pool['wonton'].playing = True
 
-muteallgoodgame = Player("muteallgoodgame")
-muteallgoodgame.add_position(
-    Position(
-        "ADC",
-        laning_phase=9,
-        overall=10,
-        champ_pool=[
-            "Ezreal",
-            "Kaisa",
-            "Smolder",
-            "Lucian",
-            "Caitlyn",
-            "Samira",
-            "Ashe",
-        ],
-    )
-)
-
-LukeyParkey = Player("LukeyParkey")
-LukeyParkey.add_position(
-    Position(
-        "Support",
-        overall=7.5,
-        laning_phase=8.5,
-        champ_pool=["Thresh", "Poppy", "Rakan", "Milio", "Alistar"],
-    )
-)
-LukeyParkey.add_position(
-    Position(
-        "Top", laning_phase=8, overall=8, champ_pool=["Poppy", "Illaoi", "Shen", "Zac"]
-    )
-)
-
-jenyu62 = Player("jenyu62")
-jenyu62.add_position(
-    Position(
-        "Support",
-        laning_phase=5,
-        overall=6,
-        champ_pool=["Rakan", "Leona", "Neeko", "Lux", "Senna"],
-    )
-)
-
-KoreanSante = Player("KoreanSante")
-KoreanSante.add_position(
-    Position(
-        "Top",
-        overall=9,
-        laning_phase=10,
-        champ_pool=["KSante", "Volibear", "Aatrox", "Mordekaiser", "Pantheon", "Nasus"],
-    )
-)
-
-wonton = Player("wonton")
-wonton.add_position(
-    Position(
-        "Support",
-        overall=8,
-        laning_phase=9.5,
-        champ_pool=["Thresh", "Rumble", "Blitzcrank", "Morgana", "Senna"],
-    )
-)
-wonton.add_position(
-    Position(
-        "Jungle", overall=8, champ_pool=["Sejuani", "Lee-sin", "Kayn", "Gragas", "Ekko"]
-    )
-)
-wonton.add_position(
-    Position(
-        "Mid",
-        overall=7,
-        laning_phase=6,
-        champ_pool=["Viktor", "Orianna", "Zoe", "Syndra", "Galio", "Kassadin"],
-    )
-)  # TODO needs change
-
-# Add all users
-user_pool.append(TSOHN)
-user_pool.append(dotoeri)
-user_pool.append(DK_Showmaker)
-user_pool.append(zxczxc)
-user_pool.append(Zinoo)
-user_pool.append(Eightine)
-user_pool.append(JustLikeHim)
-user_pool.append(VexOnTheBeach)
-user_pool.append(muteallgoodgame)
-user_pool.append(LukeyParkey)
-user_pool.append(jenyu62)
-user_pool.append(KoreanSante)
-user_pool.append(wonton)
+# print(user_pool.values())
