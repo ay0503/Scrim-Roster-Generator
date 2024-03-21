@@ -1,0 +1,224 @@
+[
+    {
+        "name": "TSOHN",
+        "positions": [
+            {
+                "lane": "Top",
+                "overall": 5.0,
+                "laning_phase": 3.0,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "DK_Showmaker",
+        "positions": [
+            {
+                "lane": "Top",
+                "overall": 7.0,
+                "laning_phase": 6.0,
+                "champ_pool": []
+            },
+            {
+                "lane": "Jungle",
+                "overall": 7.0,
+                "laning_phase": null,
+                "champ_pool": []
+            },
+            {
+                "lane": "Mid",
+                "overall": 8.5,
+                "laning_phase": 7.5,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "LukeyParkey",
+        "positions": [
+            {
+                "lane": "Top",
+                "overall": 8.0,
+                "laning_phase": 8.0,
+                "champ_pool": []
+            },
+            {
+                "lane": "ADC",
+                "overall": 4.0,
+                "laning_phase": 4.0,
+                "champ_pool": []
+            },
+            {
+                "lane": "Support",
+                "overall": 6.5,
+                "laning_phase": 6.5,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "KoreanSante",
+        "positions": [
+            {
+                "lane": "Top",
+                "overall": 9.5,
+                "laning_phase": 10.0,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "wonton",
+        "positions": [
+            {
+                "lane": "Top",
+                "overall": 6.0,
+                "laning_phase": 5.0,
+                "champ_pool": []
+            },
+            {
+                "lane": "Jungle",
+                "overall": 6.0,
+                "laning_phase": null,
+                "champ_pool": []
+            },
+            {
+                "lane": "Mid",
+                "overall": 5.0,
+                "laning_phase": 4.0,
+                "champ_pool": []
+            },
+            {
+                "lane": "Support",
+                "overall": 7.0,
+                "laning_phase": 7.0,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "dotoeri",
+        "positions": [
+            {
+                "lane": "Jungle",
+                "overall": 9.5,
+                "laning_phase": null,
+                "champ_pool": []
+            },
+            {
+                "lane": "ADC",
+                "overall": 5.0,
+                "laning_phase": 5.0,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "JustLikeHim",
+        "positions": [
+            {
+                "lane": "Jungle",
+                "overall": 9.5,
+                "laning_phase": null,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "zxczxc",
+        "positions": [
+            {
+                "lane": "Mid",
+                "overall": 10.0,
+                "laning_phase": 10.0,
+                "champ_pool": []
+            },
+            {
+                "lane": "ADC",
+                "overall": 7.0,
+                "laning_phase": 7.0,
+                "champ_pool": []
+            },
+            {
+                "lane": "Support",
+                "overall": 9.0,
+                "laning_phase": 10.0,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "VexOnTheBeach",
+        "positions": [
+            {
+                "lane": "Mid",
+                "overall": 6.0,
+                "laning_phase": 4.0,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "Zinoo",
+        "positions": [
+            {
+                "lane": "ADC",
+                "overall": 7.0,
+                "laning_phase": 7.0,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "Eightine",
+        "positions": [
+            {
+                "lane": "ADC",
+                "overall": 6.0,
+                "laning_phase": 6.0,
+                "champ_pool": []
+            },
+            {
+                "lane": "Support",
+                "overall": 6.0,
+                "laning_phase": 7.0,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "muteallgoodgame",
+        "positions": [
+            {
+                "lane": "ADC",
+                "overall": 10.0,
+                "laning_phase": 10.0,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    },
+    {
+        "name": "jenyu62",
+        "positions": [
+            {
+                "lane": "Support",
+                "overall": 3.0,
+                "laning_phase": 2.0,
+                "champ_pool": []
+            }
+        ],
+        "playing": true
+    }
+]

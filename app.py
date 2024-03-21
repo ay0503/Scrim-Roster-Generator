@@ -1,16 +1,19 @@
+from flask import Flask, render_template, request, jsonify
 from itertools import combinations, product
 from user_data import *
+
+# TODO create calendar entries (google calendar API)
+
+app = Flask(__name__)
 
 DEBUG = False
 USER_POOL = list(user_pool.values())
 FIXES = {
     # 'DK_Showmaker': 'Mid',
-    # 'LukeyParkey': 'Top',
+    'LukeyParkey': 'Top',
     # 'dotoeri': 'Jungle',
     # 'Eightine': 'Support',
-    # 'wonton': 'Support',
-    'LukeyParkey': 'ADC',
-    'Eightine': 'ADC',
+    'wonton': 'Support',
 }
 SYNERGIES = [
     {'muteallgoodgame': 'ADC', 'zxczxc': 'Support'},
@@ -98,27 +101,81 @@ def print_teams(team_scores):
     )
 
 
-def __main__():
-    players = [p for p in USER_POOL if p.playing]
-    num_players = len(players)
-    print('_________________5v5 Scrim Roster_________________')
-    print('Number of players:', num_players)
-    print('Not Playing:', [p.name for p in USER_POOL if not p.playing])
+# def __main__():
+#     players = [p for p in USER_POOL if p.playing]
+#     num_players = len(players)
+#     print('_________________5v5 Scrim Roster_________________')
+#     print('Number of players:', num_players)
+#     print('Not Playing:', [p.name for p in USER_POOL if not p.playing])
 
-    if num_players < 10:
-        print('Not enough players to create a game')
-    elif num_players > 10:
-        print('Too many players to create a game')
-    else:
-        most_balanced_teams, alternatives = create_balanced_teams(players)
-        if most_balanced_teams:
-            print('Roster:')
-            print_teams(most_balanced_teams)
-            print('Alternatives:')
-            for team_scores in alternatives:
-                print_teams(team_scores)
+#     if num_players < 10:
+#         print('Not enough players to create a game')
+#     elif num_players > 10:
+#         print('Too many players to create a game')
+#     else:
+#         most_balanced_teams, alternatives = create_balanced_teams(players)
+#         if most_balanced_teams:
+#             print('Roster:')
+#             print_teams(most_balanced_teams)
+#             print('Alternatives:')
+#             for team_scores in alternatives:
+#                 print_teams(team_scores)
+#         else:
+#             print('No balanced teams could be found.')
+
+
+@app.route('/')
+def index():
+    print('Starting ')
+    return render_template('index.html')
+
+
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    name = data['name']
+    player = next((p for p in USER_POOL if p.name == name), None)
+    if player:
+        player.playing = True
+        players = [p.name for p in USER_POOL if p.playing]
+        if len(players) == 10:
+            most_balanced_teams, _ = create_balanced_teams(
+                [p for p in USER_POOL if p.playing]
+            )
+            matchup = {
+                'blue': {
+                    'top': most_balanced_teams[0].players['Top'],
+                    'jungle': most_balanced_teams[0].players['Jungle'],
+                    'mid': most_balanced_teams[0].players['Mid'],
+                    'adc': most_balanced_teams[0].players['ADC'],
+                    'support': most_balanced_teams[0].players['Support'],
+                },
+                'red': {
+                    'top': most_balanced_teams[1].players['Top'],
+                    'jungle': most_balanced_teams[1].players['Jungle'],
+                    'mid': most_balanced_teams[1].players['Mid'],
+                    'adc': most_balanced_teams[1].players['ADC'],
+                    'support': most_balanced_teams[1].players['Support'],
+                },
+            }
+            return jsonify(
+                {
+                    'message': f'{name} registered successfully. Matchup generated.',
+                    'players': players,
+                    'matchup': matchup,
+                }
+            )
         else:
-            print('No balanced teams could be found.')
+            return jsonify(
+                {
+                    'message': f'{name} registered successfully.',
+                    'players': players,
+                    'matchup': None,
+                }
+            )
+    else:
+        return jsonify({'message': f'{name} not found in the database.'}), 404
 
 
-__main__()
+if __name__ == '__main__':
+    app.run(debug=True)

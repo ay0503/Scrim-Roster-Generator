@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>5v5 Scrim Team Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        </div>
+        <form id="registration-form">
+            <div class="form-group">
+                <input type="text" id="name" name="name" placeholder="YOUR NAME" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">REGISTER</button>
+            </div>
+        </form>
+        <div id="message"></div>
+        <div id="registered-players">
+            <h2>Registered Players</h2>
+            <ul id="player-list"></ul>
+        </div>
+        <div id="matchup-preview">
+            <h2>5v5 Matchup Preview</h2>
+            <div class="team-container">
+                <div class="team">
+                    <h3>Blue Team</h3>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><img src="{{ url_for('static', filename='top.png') }}" alt="Top"></td>
+                                <td id="blue-top"></td>
+                            </tr>
+                            <tr>
+                                <td><img src="{{ url_for('static', filename='jungle.png') }}" alt="Jungle"></td>
+                                <td id="blue-jungle"></td>
+                            </tr>
+                            <tr>
+                                <td><img src="{{ url_for('static', filename='mid.png') }}" alt="Mid"></td>
+                                <td id="blue-mid"></td>
+                            </tr>
+                            <tr>
+                                <td><img src="{{ url_for('static', filename='bottom.png') }}" alt="Bottom"></td>
+                                <td id="blue-adc"></td>
+                            </tr>
+                            <tr>
+                                <td><img src="{{ url_for('static', filename='support.png') }}" alt="Support"></td>
+                                <td id="blue-support"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="team">
+                    <h3>Red Team</h3>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><img src="{{ url_for('static', filename='top.png') }}" alt="Top"></td>
+                                <td id="red-top"></td>
+                            </tr>
+                            <tr>
+                                <td><img src="{{ url_for('static', filename='jungle.png') }}" alt="Jungle"></td>
+                                <td id="red-jungle"></td>
+                            </tr>
+                            <tr>
+                                <td><img src="{{ url_for('static', filename='mid.png') }}" alt="Mid"></td>
+                                <td id="red-mid"></td>
+                            </tr>
+                            <tr>
+                                <td><img src="{{ url_for('static', filename='bottom.png') }}" alt="Bottom"></td>
+                                <td id="red-adc"></td>
+                            </tr>
+                            <tr>
+                                <td><img src="{{ url_for('static', filename='support.png') }}" alt="Support"></td>
+                                <td id="red-support"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -69,10 +69,10 @@ user_pool['Zinoo'].playing = False
 user_pool['Eightine'].playing = True
 user_pool['JustLikeHim'].playing = True
 user_pool['VexOnTheBeach'].playing = True
-user_pool['muteallgoodgame'].playing = True
+user_pool['muteallgoodgame'].playing = False
 user_pool['LukeyParkey'].playing = True
-user_pool['jenyu62'].playing = False
+user_pool['jenyu62'].playing = True
 user_pool['KoreanSante'].playing = True
 user_pool['wonton'].playing = True
 
-# print(user_pool.values())
+# print(user_pool)
