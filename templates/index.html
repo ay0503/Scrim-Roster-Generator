@@ -18,66 +18,58 @@
             </div>
         </form>
         <div id="message"></div>
-        <div id="registered-players">
+        <!-- <div id="registered-players">
             <h2>Registered Players</h2>
             <ul id="player-list"></ul>
-        </div>
-        <div id="matchup-preview">
+        </div> -->
+        <div id="matchup-preview" class="matchup-preview">
             <h2>5v5 Matchup Preview</h2>
             <div class="team-container">
-                <div class="team">
+                <div class="team blue-team">
                     <h3>Blue Team</h3>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><img src="{{ url_for('static', filename='top.png') }}" alt="Top"></td>
-                                <td id="blue-top"></td>
-                            </tr>
-                            <tr>
-                                <td><img src="{{ url_for('static', filename='jungle.png') }}" alt="Jungle"></td>
-                                <td id="blue-jungle"></td>
-                            </tr>
-                            <tr>
-                                <td><img src="{{ url_for('static', filename='mid.png') }}" alt="Mid"></td>
-                                <td id="blue-mid"></td>
-                            </tr>
-                            <tr>
-                                <td><img src="{{ url_for('static', filename='bottom.png') }}" alt="Bottom"></td>
-                                <td id="blue-adc"></td>
-                            </tr>
-                            <tr>
-                                <td><img src="{{ url_for('static', filename='support.png') }}" alt="Support"></td>
-                                <td id="blue-support"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="player" id="blue-top">
+                        <img src="{{ url_for('static', filename='top_icon.png') }}" alt="Top Icon">
+                        <span class="player-name" id="blue-top-name">TBA</span>
+                    </div>
+                    <div class="player" id="blue-jungle">
+                        <img src="{{ url_for('static', filename='jungle_icon.png') }}" alt="Jungle Icon">
+                        <span class="player-name" id="blue-jungle-name">TBA</span>
+                    </div>
+                    <div class="player" id="blue-mid">
+                        <img src="{{ url_for('static', filename='mid_icon.png') }}" alt="Mid Icon">
+                        <span class="player-name" id="blue-mid-name">TBA</span>
+                    </div>
+                    <div class="player" id="blue-adc">
+                        <img src="{{ url_for('static', filename='bottom_icon.png') }}" alt="Bottom Icon">
+                        <span class="player-name" id="blue-adc-name">TBA</span>
+                    </div>
+                    <div class="player" id="blue-support">
+                        <img src="{{ url_for('static', filename='support_icon.png') }}" alt="Support Icon">
+                        <span class="player-name" id="blue-support-name">TBA</span>
+                    </div>
                 </div>
-                <div class="team">
+                <div class="team red-team">
                     <h3>Red Team</h3>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><img src="{{ url_for('static', filename='top.png') }}" alt="Top"></td>
-                                <td id="red-top"></td>
-                            </tr>
-                            <tr>
-                                <td><img src="{{ url_for('static', filename='jungle.png') }}" alt="Jungle"></td>
-                                <td id="red-jungle"></td>
-                            </tr>
-                            <tr>
-                                <td><img src="{{ url_for('static', filename='mid.png') }}" alt="Mid"></td>
-                                <td id="red-mid"></td>
-                            </tr>
-                            <tr>
-                                <td><img src="{{ url_for('static', filename='bottom.png') }}" alt="Bottom"></td>
-                                <td id="red-adc"></td>
-                            </tr>
-                            <tr>
-                                <td><img src="{{ url_for('static', filename='support.png') }}" alt="Support"></td>
-                                <td id="red-support"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="player" id="red-top">
+                        <img src="{{ url_for('static', filename='top_icon.png') }}" alt="Top Icon">
+                        <span class="player-name" id="red-top-name">TBA</span>
+                    </div>
+                    <div class="player" id="red-jungle">
+                        <img src="{{ url_for('static', filename='jungle_icon.png') }}" alt="Jungle Icon">
+                        <span class="player-name" id="red-jungle-name">TBA</span>
+                    </div>
+                    <div class="player" id="red-mid">
+                        <img src="{{ url_for('static', filename='mid_icon.png') }}" alt="Mid Icon">
+                        <span class="player-name" id="red-mid-name">TBA</span>
+                    </div>
+                    <div class="player" id="red-adc">
+                        <img src="{{ url_for('static', filename='bottom_icon.png') }}" alt="Bottom Icon">
+                        <span class="player-name" id="red-adc-name">TBA</span>
+                    </div>
+                    <div class="player" id="red-support">
+                        <img src="{{ url_for('static', filename='support_icon.png') }}" alt="Support Icon">
+                        <span class="player-name" id="red-support-name">TBA</span>
+                    </div>
                 </div>
             </div>
         </div>

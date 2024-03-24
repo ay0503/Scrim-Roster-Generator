@@ -4,13 +4,13 @@ from user_data import *
 DEBUG = False
 USER_POOL = list(user_pool.values())
 FIXES = {
-    # 'DK_Showmaker': 'Mid',
+    'DK_Showmaker': 'Mid',
     # 'LukeyParkey': 'Top',
     # 'dotoeri': 'Jungle',
     # 'Eightine': 'Support',
-    # 'wonton': 'Support',
-    'LukeyParkey': 'ADC',
-    'Eightine': 'ADC',
+    'wonton': 'Support',
+    'LukeyParkey': 'Top',
+    # 'Eightine': 'ADC',
 }
 SYNERGIES = [
     {'muteallgoodgame': 'ADC', 'zxczxc': 'Support'},
