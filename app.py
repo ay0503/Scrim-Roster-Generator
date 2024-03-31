@@ -7,8 +7,10 @@ from user_data import *
 app = Flask(__name__)
 
 DEBUG = False
-USER_POOL = list(user_pool.values())
+# USER_POOL = list(user_pool.values())
 FIXES = {
+    'DK_Showmaker': 'Mid',
+    # 'LukeyParkey': 'Top',
     'DK_Showmaker': 'Mid',
     # 'LukeyParkey': 'Top',
     # 'dotoeri': 'Jungle',
