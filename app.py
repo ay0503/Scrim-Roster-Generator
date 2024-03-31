@@ -9,17 +9,33 @@ app = Flask(__name__)
 DEBUG = False
 USER_POOL = list(user_pool.values())
 FIXES = {
-    # 'DK_Showmaker': 'Mid',
-    'LukeyParkey': 'Top',
+    'DK_Showmaker': 'Mid',
+    # 'LukeyParkey': 'Top',
     # 'dotoeri': 'Jungle',
     # 'Eightine': 'Support',
     'wonton': 'Support',
+    'LukeyParkey': 'Top',
+    # 'Eightine': 'ADC',
 }
 SYNERGIES = [
     {'muteallgoodgame': 'ADC', 'zxczxc': 'Support'},
     {'JustLikeHim': 'Jungle', 'KoreanSante': 'Top'},
 ]
 
+user_pool['TSOHN'].playing = False
+user_pool['dotoeri'].playing = True
+user_pool['DK_Showmaker'].playing = True
+user_pool['zxczxc'].playing = True
+user_pool['Zinoo'].playing = True
+user_pool['Eightine'].playing = False
+user_pool['JustLikeHim'].playing = True
+user_pool['VexOnTheBeach'].playing = True
+user_pool['muteallgoodgame'].playing = False
+user_pool['LukeyParkey'].playing = True
+user_pool['jenyu62'].playing = True
+user_pool['KoreanSante'].playing = True
+user_pool['wonton'].playing = True
+USER_POOL = list(user_pool.values())
 
 def generate_position_permutations(team, players):
     return list(
@@ -58,12 +74,14 @@ def calculate_balance_score(team_a_score, team_b_score):
 
 
 def create_balanced_teams(players):
+    print(players)
     all_players = [p.name for p in players]
     best_balance = float('inf')
     best_teams = None
     alternatives = []
     for team_a in combinations(all_players, 5):
         team_b = set(all_players) - set(team_a)
+        print(set(team_a), team_b)
         for team_a_perm, team_b_perm in product(
             generate_position_permutations(team_a, players),
             generate_position_permutations(team_b, players),
@@ -76,7 +94,9 @@ def create_balanced_teams(players):
             team_a_score, team_b_score = calculate_team_score(
                 team_a_perm, players
             ), calculate_team_score(team_b_perm, players)
-            if team_a_score.is_valid() and team_b_score.is_valid():
+            if len(players) < 10 or (
+                team_a_score.is_valid() and team_b_score.is_valid()
+            ):
                 balance_score = calculate_balance_score(
                     team_a_score, team_b_score
                 )
@@ -101,80 +121,87 @@ def print_teams(team_scores):
     )
 
 
-# def __main__():
-#     players = [p for p in USER_POOL if p.playing]
-#     num_players = len(players)
-#     print('_________________5v5 Scrim Roster_________________')
-#     print('Number of players:', num_players)
-#     print('Not Playing:', [p.name for p in USER_POOL if not p.playing])
-
-#     if num_players < 10:
-#         print('Not enough players to create a game')
-#     elif num_players > 10:
-#         print('Too many players to create a game')
-#     else:
-#         most_balanced_teams, alternatives = create_balanced_teams(players)
-#         if most_balanced_teams:
-#             print('Roster:')
-#             print_teams(most_balanced_teams)
-#             print('Alternatives:')
-#             for team_scores in alternatives:
-#                 print_teams(team_scores)
-#         else:
-#             print('No balanced teams could be found.')
-
-
 @app.route('/')
 def index():
     print('Starting ')
     return render_template('index.html')
 
 
+positions = ['Top', 'Jungle', 'Mid', 'ADC', 'Support']
+registered_players = [
+    TBA('TBA' + str(i), positions[i % 5])
+    for i in range(len((positions + positions)))
+]
+# registered_players = [p for p in user_pool.values() if p.playing]
+# print(registered_players)
+
 @app.route('/register', methods=['POST'])
-def register():
-    data = request.get_json()
-    name = data['name']
-    player = next((p for p in USER_POOL if p.name == name), None)
-    if player:
-        player.playing = True
-        players = [p.name for p in USER_POOL if p.playing]
-        if len(players) == 10:
-            most_balanced_teams, _ = create_balanced_teams(
-                [p for p in USER_POOL if p.playing]
-            )
-            matchup = {
-                'blue': {
-                    'top': most_balanced_teams[0].players['Top'],
-                    'jungle': most_balanced_teams[0].players['Jungle'],
-                    'mid': most_balanced_teams[0].players['Mid'],
-                    'adc': most_balanced_teams[0].players['ADC'],
-                    'support': most_balanced_teams[0].players['Support'],
-                },
-                'red': {
-                    'top': most_balanced_teams[1].players['Top'],
-                    'jungle': most_balanced_teams[1].players['Jungle'],
-                    'mid': most_balanced_teams[1].players['Mid'],
-                    'adc': most_balanced_teams[1].players['ADC'],
-                    'support': most_balanced_teams[1].players['Support'],
-                },
-            }
-            return jsonify(
+def register_player():
+    data = request.json
+    player_name = data.get('name')
+
+    if player_name not in [
+        player.name for player in registered_players
+    ]:  # Check if the name is not already in the list
+        # Find the player object by name from USER_POOL
+        player = next((p for p in USER_POOL if p.name == player_name), None)
+        if player:
+            for i in range(len(registered_players)):
+                if (
+                    player.positions[0].lane
+                    == registered_players[i].positions[0].lane
+                ):
+                    registered_players[i] = player
+                    break
+
+    # Once 10 players have registered, generate the 5v5 matchup
+    best_teams, alternatives = create_balanced_teams(registered_players)
+    print(best_teams, alternatives)
+    if len(registered_players) < 10 or best_teams:
+        # Convert the best team matchup to a suitable format for the frontend
+        matchup = convert_teams_to_matchup_format(best_teams)
+        # Here, you may want to include alternative matchups or handle them differently
+        print(
+            jsonify(
                 {
-                    'message': f'{name} registered successfully. Matchup generated.',
-                    'players': players,
+                    'players': [p.name for p in registered_players],
                     'matchup': matchup,
                 }
             )
-        else:
-            return jsonify(
-                {
-                    'message': f'{name} registered successfully.',
-                    'players': players,
-                    'matchup': None,
-                }
-            )
-    else:
-        return jsonify({'message': f'{name} not found in the database.'}), 404
+        )
+        return jsonify(
+            {
+                'players': [p.name for p in registered_players],
+                'matchup': matchup,
+            }
+        )
+
+    return jsonify(
+        {
+            'players': [p.name for p in registered_players],
+            'message': 'Waiting for more players.',
+        }
+    )
+
+
+def convert_teams_to_matchup_format(teams):
+    # Assuming teams is a tuple with each team being a list of tuples (player, position)
+    team_blue, team_red = teams
+    print(type(teams[0]), end='\n\n\n\n')
+    return {
+        'blue': {
+            position.lower(): team_blue.players[position]
+            if 'TBA' not in team_blue.players[position]
+            else 'TBA'
+            for position in team_blue.players
+        },
+        'red': {
+            position.lower(): team_red.players[position]
+            if 'TBA' not in team_red.players[position]
+            else 'TBA'
+            for position in team_red.players
+        },
+    }
 
 
 if __name__ == '__main__':

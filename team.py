@@ -14,6 +14,26 @@ class Player:
         return f'\n\n{self.name}: Positions{self.positions}'
 
     def __eq__(self, other) -> bool:
+        if type(other) == str:
+            return other == self.name
+        return self.name == other.name
+
+
+class TBA(Player):
+    def __init__(self, name, position) -> None:
+        self.name = name
+        self.positions = [Position(position, 0, [], 0)]
+        self.playing = False
+
+    def __hash__(self) -> int:
+        return hash(self.name)
+
+    def __repr__(self) -> str:
+        return f'\n\n{self.name}: Positions{self.positions}'
+
+    def __eq__(self, other) -> bool:
+        if type(other) == str:
+            return other in self.name
         return self.name == other.name
 
 
